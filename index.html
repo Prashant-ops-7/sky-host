@@ -1319,6 +1319,226 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+  
+<!-- SKY HOST & STUDIO: Supabase Authentication -->
+<style>
+  #shs-auth-launch {
+    position: fixed; right: 18px; bottom: 18px; z-index: 9998;
+    padding: 13px 20px; border: 1px solid #b58aff; border-radius: 30px;
+    color: white; background: linear-gradient(135deg,#762cff,#aa42ff);
+    font-weight: 700; cursor: pointer; box-shadow: 0 0 20px #8b36ff88;
+  }
+  #shs-auth-overlay {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: #05030beF; align-items: center; justify-content: center;
+    padding: 16px; overflow-y: auto;
+  }
+  #shs-auth-box {
+    width: 100%; max-width: 390px; box-sizing: border-box;
+    background: #11101f; color: white; border: 1px solid #7844cc;
+    border-radius: 18px; padding: 24px;
+    box-shadow: 0 0 35px #702cff55; font-family: Arial,sans-serif;
+  }
+  #shs-auth-box h2 { text-align:center; color:#c7a2ff; margin-top:0; }
+  #shs-auth-box input {
+    display:block; box-sizing:border-box; width:100%; margin:12px 0;
+    padding:13px; border-radius:9px; border:1px solid #49405f;
+    background:#090814; color:white; font-size:16px;
+  }
+  #shs-auth-box button {
+    padding:12px; border:0; border-radius:9px; cursor:pointer;
+    font-weight:bold;
+  }
+  #shs-auth-submit {
+    width:100%; background:#8b45ff; color:white; margin-top:5px;
+  }
+  #shs-auth-switch {
+    background:transparent; color:#c7a2ff; text-decoration:underline;
+  }
+  #shs-auth-close { float:right; background:#29243a; color:white; }
+  #shs-auth-message { font-size:14px; line-height:1.5; overflow-wrap:anywhere; }
+</style>
+
+<button id="shs-auth-launch" type="button">Login / Register</button>
+
+<div id="shs-auth-overlay">
+  <section id="shs-auth-box" role="dialog" aria-modal="true"
+           aria-labelledby="shs-auth-title">
+    <button id="shs-auth-close" type="button" aria-label="Close">✕</button>
+    <h2 id="shs-auth-title">SHS Account</h2>
+    <p id="shs-auth-intro">Login to SKY HOST &amp; STUDIO</p>
+
+    <form id="shs-auth-form">
+      <label for="shs-auth-email">Email address</label>
+      <input id="shs-auth-email" type="email" autocomplete="email"
+             placeholder="you@example.com" required>
+
+      <label for="shs-auth-password">Password</label>
+      <input id="shs-auth-password" type="password"
+             autocomplete="current-password" minlength="12"
+             placeholder="At least 12 characters" required>
+
+      <button id="shs-auth-submit" type="submit">Login</button>
+    </form>
+
+    <p id="shs-auth-message" role="status" aria-live="polite"></p>
+    <p id="shs-auth-switch-row">
+      Don't have an account?
+      <button id="shs-auth-switch" type="button">Register</button>
+    </p>
+    <button id="shs-auth-logout" type="button"
+            style="display:none;background:#29243a;color:white;width:100%">
+      Logout
+    </button>
+  </section>
+</div>
+
+<!-- Supabase JavaScript client -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const SUPABASE_URL = "https://tkeqviovqmvxgvdwvmfd.supabase.co";
+
+  // Replace this placeholder with your PUBLIC publishable key.
+  // Never use a secret key or service_role key here.
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_wB_dPHG5b5W3DbRwBMsuLQ_F4l-vWj1";
+
+  const overlay = document.getElementById("shs-auth-overlay");
+  const form = document.getElementById("shs-auth-form");
+  const emailInput = document.getElementById("shs-auth-email");
+  const passwordInput = document.getElementById("shs-auth-password");
+  const submit = document.getElementById("shs-auth-submit");
+  const message = document.getElementById("shs-auth-message");
+  const title = document.getElementById("shs-auth-title");
+  const intro = document.getElementById("shs-auth-intro");
+  const switchRow = document.getElementById("shs-auth-switch-row");
+  const logout = document.getElementById("shs-auth-logout");
+
+  let mode = "login";
+  let client = null;
+
+  function say(text) {
+    message.textContent = text;
+  }
+
+  function setMode(nextMode) {
+    mode = nextMode;
+    title.textContent = mode === "login" ? "SHS Login" : "Create SHS Account";
+    intro.textContent = mode === "login"
+      ? "Login to SKY HOST & STUDIO"
+      : "Register with your email and a strong password";
+    submit.textContent = mode === "login" ? "Login" : "Create Account";
+    passwordInput.autocomplete =
+      mode === "login" ? "current-password" : "new-password";
+    document.getElementById("shs-auth-switch").textContent =
+      mode === "login" ? "Register" : "Login";
+    switchRow.firstChild.textContent =
+      mode === "login" ? "Don't have an account? " : "Already registered? ";
+    say("");
+  }
+
+  function openModal() {
+    overlay.style.display = "flex";
+    say("");
+  }
+
+  document.getElementById("shs-auth-launch").addEventListener("click", openModal);
+  document.getElementById("shs-auth-close").addEventListener("click", () => {
+    overlay.style.display = "none";
+  });
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) overlay.style.display = "none";
+  });
+  document.getElementById("shs-auth-switch").addEventListener("click", () => {
+    setMode(mode === "login" ? "register" : "login");
+  });
+
+  if (!window.supabase ||
+      SUPABASE_PUBLISHABLE_KEY === "PASTE_YOUR_PUBLISHABLE_KEY_HERE") {
+    say("Setup needed: add your Supabase publishable key in the website code.");
+    document.getElementById("shs-auth-launch").addEventListener("click", openModal);
+    return;
+  }
+
+  client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  async function updateSession(session) {
+    if (session && session.user) {
+      const user = session.user;
+      title.textContent = "Your SHS Account";
+      intro.textContent = "Signed in as " + user.email;
+      form.style.display = "none";
+      switchRow.style.display = "none";
+      logout.style.display = "block";
+    } else {
+      form.style.display = "block";
+      switchRow.style.display = "block";
+      logout.style.display = "none";
+      setMode("login");
+    }
+  }
+
+  client.auth.onAuthStateChange((_event, session) => {
+    updateSession(session);
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    say("");
+    submit.disabled = true;
+
+    try {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      let result;
+      if (mode === "register") {
+        result = await client.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: window.location.origin + window.location.pathname
+          }
+        });
+      } else {
+        result = await client.auth.signInWithPassword({ email, password });
+      }
+
+      if (result.error) throw result.error;
+
+      if (mode === "register" && !result.data.session) {
+        say("Registration submitted. Check your email for the confirmation link before logging in.");
+      } else {
+        say(mode === "register" ? "Account created!" : "Login successful!");
+        await updateSession(result.data.session);
+      }
+    } catch (error) {
+      say(error.message || "Authentication failed. Please try again.");
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  logout.addEventListener("click", async () => {
+    const { error } = await client.auth.signOut();
+    if (error) {
+      say(error.message);
+    } else {
+      say("You have logged out.");
+    }
+  });
+
+  client.auth.getSession().then(({ data, error }) => {
+    if (error) say(error.message);
+    else updateSession(data.session);
+  });
+})();
+</script>
+<!-- End SHS Authentication -->
+  
 </body>
 </html>
 
