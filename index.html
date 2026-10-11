@@ -4,229 +4,757 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#080812">
-  <meta name="description" content="SKY HOST — Game server hosting built for your next adventure.">
-  <title>SKY HOST | Game Server Hosting</title>
+  <meta name="description" content="SKY HOST & STUDIO — Game server hosting, Minecraft hosting, bot hosting, and creative projects.">
+  <title>SKY HOST & STUDIO | Gaming & Hosting</title>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: #080812;
       color: #f5f5ff;
-      line-height: 1.6;
+      line-height: 1.7;
     }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1100px, 90%); margin: auto; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    /* HEADER & TEXT LOGO */
+
     header {
       border-bottom: 1px solid #25223b;
-      background: #0b0a16;
+      background: rgba(11, 10, 22, 0.96);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
+      backdrop-filter: blur(12px);
     }
+
     nav {
-      min-height: 72px;
+      min-height: 78px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
     }
-    .logo { font-size: 25px; font-weight: 900; letter-spacing: 1px; }
-    .logo span { color: #a78bfa; }
-    .navlinks { display: flex; gap: 20px; font-size: 14px; color: #c4c1d8; }
-    .navlinks a:hover { color: #c4b5fd; }
-    .hero { padding: 95px 0 80px; text-align: center; }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .logo-mark {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #a78bfa, #6d28d9);
+      color: white;
+      font-size: 15px;
+      box-shadow: 0 0 22px #8b5cf644;
+    }
+
+    .logo-text span {
+      color: #a78bfa;
+    }
+
+    .logo-text small {
+      display: block;
+      margin-top: 4px;
+      color: #aaa7c2;
+      font-size: 10px;
+      letter-spacing: 3px;
+      font-weight: 600;
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      color: #c4c1d8;
+    }
+
+    .navlinks a {
+      transition: color .2s;
+    }
+
+    .navlinks a:hover {
+      color: #c4b5fd;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 110px 0 95px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, #54258c35, transparent 60%);
+    }
+
     .tag {
       display: inline-block;
-      padding: 7px 14px;
+      padding: 7px 15px;
       border: 1px solid #514080;
       border-radius: 30px;
       color: #c4b5fd;
       background: #171127;
-      font-size: 13px;
-      margin-bottom: 22px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
     }
+
     h1 {
-      font-size: clamp(38px, 8vw, 72px);
-      line-height: 1.08;
+      font-size: clamp(39px, 8vw, 76px);
+      line-height: 1.1;
       letter-spacing: -2px;
-      margin-bottom: 22px;
+      margin-bottom: 23px;
     }
+
     h1 span {
       color: #a78bfa;
       text-shadow: 0 0 35px #7c3aed55;
     }
-    .hero p { max-width: 620px; margin: 0 auto; color: #aaa7c2; font-size: 17px; }
-    .buttons { display: flex; justify-content: center; gap: 13px; flex-wrap: wrap; margin-top: 30px; }
+
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto;
+      color: #aaa7c2;
+      font-size: 17px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
     .btn {
       display: inline-block;
-      padding: 13px 22px;
+      padding: 12px 22px;
       border-radius: 10px;
       font-weight: bold;
+      font-size: 14px;
       border: 1px solid #514080;
+      transition: transform .2s, background .2s;
     }
-    .primary { background: #8b5cf6; color: white; border-color: #8b5cf6; }
-    .primary:hover { background: #7c3aed; }
-    .secondary { background: #151323; }
-    .secondary:hover { background: #211b37; }
-    section { padding: 65px 0; }
-    .section-head { text-align: center; margin-bottom: 35px; }
-    .section-head h2 { font-size: clamp(27px, 5vw, 40px); margin-bottom: 8px; }
-    .section-head p { color: #aaa7c2; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      background: #8b5cf6;
+      color: white;
+      border-color: #8b5cf6;
+    }
+
+    .primary:hover {
+      background: #7c3aed;
+    }
+
+    .secondary {
+      background: #151323;
+    }
+
+    .secondary:hover {
+      background: #211b37;
+    }
+
+    /* GENERAL SECTIONS */
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(28px, 5vw, 41px);
+      margin-bottom: 8px;
+    }
+
+    .section-head p {
+      color: #aaa7c2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
     .card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       background: linear-gradient(145deg, #151326, #0e0d19);
       border: 1px solid #292541;
       border-radius: 16px;
-      padding: 25px;
+      padding: 26px;
       transition: transform .2s, border-color .2s;
     }
-    .card:hover { transform: translateY(-4px); border-color: #8b5cf6; }
-    .symbol { font-size: 30px; margin-bottom: 13px; }
-    .card h3 { font-size: 20px; margin-bottom: 8px; }
-    .card p { color: #aaa7c2; font-size: 14px; }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #8b5cf6;
+    }
+
+    .symbol {
+      font-size: 27px;
+      font-weight: 900;
+      color: #a78bfa;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #aaa7c2;
+      font-size: 14px;
+    }
+
+    .card h4 {
+      font-size: 15px;
+      margin: 14px 0 5px;
+      color: #d9ccff;
+    }
+
+    .card hr {
+      width: 100%;
+      border: 0;
+      border-top: 1px solid #302947;
+      margin: 18px 0 8px;
+    }
+
     .status {
       display: inline-block;
-      font-size: 11px;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1px;
       color: #c4b5fd;
       border: 1px solid #514080;
       background: #211633;
       border-radius: 20px;
-      padding: 4px 9px;
-      margin-top: 16px;
+      padding: 5px 10px;
+      margin-top: auto;
+      margin-top: 20px;
     }
-    .cta {
-      text-align: center;
-      padding: 45px 25px;
+
+    /* FEATURES */
+
+    #features {
+      background: #0b0a15;
+      border-top: 1px solid #1d1a30;
+      border-bottom: 1px solid #1d1a30;
+    }
+
+    .feature-card {
+      min-height: 205px;
+    }
+
+    .feature-icon {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    /* PLANS */
+
+    #plans .card {
+      min-height: 340px;
+    }
+
+    /* ABOUT */
+
+    #about {
+      background:
+        radial-gradient(ellipse at 50% 100%, #44216b25, transparent 65%);
+    }
+
+    .about-panel {
+      padding: 42px;
       border: 1px solid #393052;
       border-radius: 20px;
-      background: radial-gradient(ellipse at top, #291747, #11101e 70%);
+      background: linear-gradient(145deg, #171127, #100f1d);
     }
-    .cta h2 { font-size: clamp(26px, 5vw, 38px); margin-bottom: 10px; }
-    .cta p { color: #b7b2ce; margin-bottom: 20px; }
-    footer { border-top: 1px solid #25223b; padding: 25px 0; color: #918da9; font-size: 13px; text-align: center; }
+
+    .about-intro {
+      max-width: 760px;
+      margin: 0 auto 35px;
+      text-align: center;
+    }
+
+    .about-intro h2 {
+      font-size: clamp(28px, 5vw, 40px);
+      margin-bottom: 15px;
+    }
+
+    .about-intro h2 span {
+      color: #a78bfa;
+    }
+
+    .about-intro p {
+      color: #b7b2ce;
+      font-size: 15px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-bottom: 32px;
+    }
+
+    .about-item {
+      background: #0d0c18;
+      border: 1px solid #292541;
+      border-radius: 13px;
+      padding: 20px;
+    }
+
+    .about-item h3 {
+      color: #d9ccff;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .about-item p {
+      color: #aaa7c2;
+      font-size: 13px;
+    }
+
+    .about-cta {
+      text-align: center;
+      border-top: 1px solid #302947;
+      padding-top: 27px;
+    }
+
+    .about-cta h3 {
+      font-size: 23px;
+      margin-bottom: 8px;
+    }
+
+    .about-cta p {
+      color: #aaa7c2;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid #25223b;
+      padding: 28px 0;
+      color: #918da9;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    footer strong {
+      color: #c4b5fd;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      color: #c4c1d8;
+    }
+
+    .footer-links a:hover {
+      color: #a78bfa;
+    }
+
+    /* MOBILE RESPONSIVE */
+
     @media (max-width: 760px) {
-      .grid { grid-template-columns: 1fr; }
-      .navlinks { gap: 11px; font-size: 12px; }
-      .logo { font-size: 21px; }
-      .hero { padding: 70px 0 55px; }
-      section { padding: 48px 0; }
+      nav {
+        min-height: 72px;
+        gap: 10px;
+      }
+
+      .logo {
+        font-size: 14px;
+        gap: 8px;
+      }
+
+      .logo-mark {
+        width: 37px;
+        height: 37px;
+        font-size: 12px;
+      }
+
+      .logo-text small {
+        font-size: 8px;
+        letter-spacing: 2px;
+      }
+
+      .navlinks {
+        gap: 12px;
+        font-size: 12px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 75px 0 65px;
+      }
+
+      section {
+        padding: 52px 0;
+      }
+
+      .about-panel {
+        padding: 25px 18px;
+      }
+
+      .card {
+        padding: 23px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .logo {
+        font-size: 12px;
+      }
+
+      .navlinks {
+        gap: 9px;
+        font-size: 11px;
+      }
     }
   </style>
 </head>
+
 <body>
+
+  <!-- HEADER -->
   <header>
     <nav class="container">
-      <a class="logo" href="#">SKY <span>HOST</span></a>
+
+      <a class="logo" href="#home" aria-label="SKY HOST & STUDIO Home">
+        <span class="logo-mark">SHS</span>
+        <span class="logo-text">
+          SKY <span>HOST</span>
+          <small>& STUDIO</small>
+        </span>
+      </a>
+
       <div class="navlinks">
         <a href="#features">Features</a>
-        <a href="#games">Games</a>
+        <a href="#plans">Plans</a>
         <a href="#about">About</a>
       </div>
+
     </nav>
   </header>
 
   <main>
-    <section class="hero">
+
+    <!-- HERO -->
+    <section class="hero" id="home">
       <div class="container">
-        <div class="tag">✦ YOUR NEXT ADVENTURE STARTS HERE</div>
-        <h1>Power Your Game.<br><span>Own Your World.</span></h1>
-        <p>Discover a new home for your gaming adventures. SKY HOST is building a hosting experience focused on performance, simplicity, and community.</p>
+
+        <div class="tag">✦ WELCOME TO SKY HOST & STUDIO</div>
+
+        <h1>
+          Power Your Game.<br>
+          <span>Build Your World.</span>
+        </h1>
+
+        <p>
+          Welcome to SKY HOST & STUDIO, where gaming, technology,
+          and creativity come together. We're building a home for
+          game servers, bot hosting, and growing online communities.
+        </p>
+
         <div class="buttons">
-          <a class="btn primary" href="#games">Explore Games ↗</a>
-          <a class="btn secondary" href="#features">Discover Features</a>
+          <a class="btn primary" href="#plans">Explore Our Plans ↗</a>
+          <a class="btn secondary"
+             href="https://discord.gg/5KPfqz2B2q"
+             target="_blank"
+             rel="noopener noreferrer">
+            Join Our Discord
+          </a>
         </div>
+
       </div>
     </section>
 
+    <!-- FEATURES -->
     <section id="features">
       <div class="container">
+
         <div class="section-head">
-          <h2>Why SKY HOST?</h2>
-          <p>Built around what gamers need.</p>
+          <h2>Why SKY HOST & STUDIO?</h2>
+          <p>Built around gamers, creators, and communities.</p>
         </div>
+
         <div class="grid">
-          <article class="card">
-            <div class="symbol">⚡</div>
+
+          <article class="card feature-card">
+            <div class="feature-icon">⚡</div>
             <h3>Performance Focused</h3>
-            <p>A hosting experience designed with smooth gameplay and reliability in mind.</p>
+            <p>
+              Our goal is to deliver hosting solutions designed
+              for smooth gameplay and reliable server experiences.
+            </p>
           </article>
-          <article class="card">
-            <div class="symbol">👾</div>
-            <h3>Easy Management</h3>
-            <p>Our goal is to make server setup and management easier for everyone.</p>
+
+          <article class="card feature-card">
+            <div class="feature-icon">🛠️</div>
+            <h3>Simple Management</h3>
+            <p>
+              We want server hosting to feel straightforward,
+              helping communities spend less time managing
+              technology and more time enjoying it.
+            </p>
           </article>
-          <article class="card">
-            <div class="symbol">🌍</div>
+
+          <article class="card feature-card">
+            <div class="feature-icon">🌍</div>
             <h3>Community First</h3>
-            <p>Create new worlds, play with friends, and grow your gaming community.</p>
+            <p>
+              From Minecraft worlds to useful bots, our vision
+              is to help people connect, create, and grow together.
+            </p>
           </article>
+
         </div>
       </div>
     </section>
 
-   <section id="plans">
-  <div class="container">
-    <div class="section-head">
-      <h2>Our Hosting Services</h2>
-      <p>Everything you need to power your community.</p>
-    </div>
+    <!-- HOSTING PLANS -->
+    <section id="plans">
+      <div class="container">
 
-    <div class="grid">
+        <div class="section-head">
+          <h2>Our Hosting Services</h2>
+          <p>Find the right solution for your next project.</p>
+        </div>
 
-      <article class="card">
-        <div class="symbol">01</div>
-        <h3>Minecraft Basic Plan</h3>
-        <p>Affordable and reliable hosting for small Minecraft servers and friends.</p>
-        <hr>
-        <h4>Intel Processor</h4>
-        <p>Essential server resources.</p>
-        <p>Perfect for small communities.</p>
-        <p>Simple server management.</p>
-        <span class="status">COMING SOON</span>
-      </article>
+        <div class="grid">
 
-      <article class="card">
-        <div class="symbol">02</div>
-        <h3>Minecraft Performance Plan</h3>
-        <p>Powerful hosting for larger Minecraft communities and demanding worlds.</p>
-        <hr>
-        <h4>AMD Processor</h4>
-        <p>More server resources.</p>
-        <p>Built for demanding workloads.</p>
-        <p>Designed for performance.</p>
-        <span class="status">COMING SOON</span>
-      </article>
+          <!-- 01 -->
+          <article class="card">
+            <div class="symbol">01</div>
 
-      <article class="card">
-        <div class="symbol">03</div>
-        <h3>Bot Hosting</h3>
-        <p>Host your bots and power up your community with useful automation tools.</p>
-        <hr>
-        <h4>Bot Hosting Features</h4>
-        <p>Discord bot support.</p>
-        <p>Community automation.</p>
-        <p>Easy bot management.</p>
-        <span class="status">COMING SOON</span>
-      </article>
+            <h3>Minecraft Basic Plan</h3>
 
-    </div>
-  </div>
-   </section>
+            <p>
+              Get started with Minecraft hosting designed
+              for friends, small servers, and new communities.
+            </p>
 
+            <hr>
+
+            <h4>Intel Processor</h4>
+
+            <p>• Essential server resources</p>
+            <p>• Suitable for smaller communities</p>
+            <p>• Simple server management</p>
+            <p>• A starting point for your world</p>
+
+            <span class="status">COMING SOON</span>
+          </article>
+
+          <!-- 02 -->
+          <article class="card">
+            <div class="symbol">02</div>
+
+            <h3>Minecraft Performance Plan</h3>
+
+            <p>
+              Take your Minecraft community further with
+              a plan intended for demanding worlds and
+              larger player communities.
+            </p>
+
+            <hr>
+
+            <h4>AMD Processor</h4>
+
+            <p>• Performance-focused hardware</p>
+            <p>• Designed for heavier workloads</p>
+            <p>• Suitable for growing communities</p>
+            <p>• Built with demanding servers in mind</p>
+
+            <span class="status">COMING SOON</span>
+          </article>
+
+          <!-- 03 -->
+          <article class="card">
+            <div class="symbol">03</div>
+
+            <h3>Bot Hosting</h3>
+
+            <p>
+              Bring your bots and community tools to life
+              with hosting intended for useful automation
+              and online community projects.
+            </p>
+
+            <hr>
+
+            <h4>Bot Hosting Features</h4>
+
+            <p>• Discord bot support</p>
+            <p>• Community automation projects</p>
+            <p>• Convenient bot management</p>
+            <p>• Support for eligible bot applications</p>
+
+            <span class="status">COMING SOON</span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
     <section id="about">
       <div class="container">
-        <div class="cta">
-          <h2>Your world. Your rules.</h2>
-          <p>SKY HOST is growing. Follow our journey as we build what's next.</p>
-          <a class="btn primary" href="https://discord.gg/5KPfqz2B2q" target="_blank" rel="noopener noreferrer">Join Our Discord</a>
+
+        <div class="about-panel">
+
+          <div class="about-intro">
+            <div class="tag">✦ GET TO KNOW US</div>
+
+            <h2>About <span>SKY HOST & STUDIO</span></h2>
+
+            <p>
+              SKY HOST & STUDIO is a growing project built around
+              gaming, hosting technology, and creativity. Our vision
+              is to make it easier for gamers, developers, and
+              communities to bring their ideas to life.
+            </p>
+
+            <br>
+
+            <p>
+              Whether it's creating a Minecraft server, running
+              a community bot, or working on something new,
+              we want to build an environment where ideas can grow
+              and every project has room to take off.
+            </p>
+          </div>
+
+          <div class="about-grid">
+
+            <div class="about-item">
+              <h3>🎮 Our Mission</h3>
+              <p>
+                To make gaming and hosting more accessible,
+                approachable, and enjoyable for communities.
+              </p>
+            </div>
+
+            <div class="about-item">
+              <h3>🚀 Our Vision</h3>
+              <p>
+                To grow into a trusted name for hosting solutions,
+                digital projects, and creative technology.
+              </p>
+            </div>
+
+            <div class="about-item">
+              <h3>🤝 Our Community</h3>
+              <p>
+                To connect gamers and creators, welcome new ideas,
+                and grow through community feedback.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="about-cta">
+            <h3>Be Part of Our Journey.</h3>
+
+            <p>
+              We're building for the future, and we'd love
+              to have you along for the adventure.
+            </p>
+
+            <a class="btn primary"
+               href="https://discord.gg/5KPfqz2B2q"
+               target="_blank"
+               rel="noopener noreferrer">
+              Join Our Discord ↗
+            </a>
+          </div>
+
         </div>
       </div>
     </section>
+
   </main>
 
+  <!-- FOOTER -->
   <footer>
-    <div class="container">© 2026 SKY HOST. Built for gamers, powered by ambition.</div>
+    <div class="container">
+
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#plans">Plans</a>
+        <a href="#about">About</a>
+        <a href="https://discord.gg/5KPfqz2B2q"
+           target="_blank"
+           rel="noopener noreferrer">
+          Discord
+        </a>
+      </div>
+
+      <p>
+        © 2026 <strong>SKY HOST & STUDIO</strong>.
+        Built for gamers, powered by ambition.
+      </p>
+
+      <p>Dream Big. Build Higher. Reach the Sky. ☁️</p>
+
+    </div>
   </footer>
+
 </body>
 </html>
